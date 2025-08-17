@@ -85,6 +85,104 @@ An intelligent email management system that uses machine learning to cluster and
 
 **Note**: The Replit version runs in demo mode with sample data. For full Gmail integration, deploy locally with your Google API credentials.
 
+## 🚀 Production Deployment
+
+### Option 1: Docker Deployment (Recommended)
+
+1. **Prerequisites**:
+   - Docker and Docker Compose installed
+   - Google API credentials (`credentials.json`)
+
+2. **Quick Deploy**:
+   ```bash
+   chmod +x deploy.sh
+   ./deploy.sh
+   ```
+
+3. **Manual Docker Deploy**:
+   ```bash
+   # Build and run with Docker Compose
+   docker-compose up -d
+   
+   # Or build and run manually
+   docker build -t inbox-triage .
+   docker run -p 8080:8080 -v $(pwd)/credentials.json:/app/credentials.json inbox-triage
+   ```
+
+### Option 2: Cloud Platform Deployment
+
+#### Heroku
+```bash
+# Install Heroku CLI
+heroku create your-app-name
+heroku config:set SECRET_KEY=$(openssl rand -hex 32)
+heroku config:set GOOGLE_CREDENTIALS_FILE=credentials.json
+git push heroku main
+```
+
+#### Google Cloud Run
+```bash
+# Build and deploy
+gcloud builds submit --tag gcr.io/PROJECT_ID/inbox-triage
+gcloud run deploy inbox-triage --image gcr.io/PROJECT_ID/inbox-triage --platform managed
+```
+
+#### AWS Elastic Beanstalk
+```bash
+# Create application
+eb init inbox-triage --platform python-3.9
+eb create inbox-triage-env
+eb deploy
+```
+
+### Option 3: Traditional Server Deployment
+
+1. **Server Setup**:
+   ```bash
+   # Install dependencies
+   sudo apt update
+   sudo apt install python3 python3-pip nginx
+   
+   # Clone repository
+   git clone https://github.com/krishnapidaparty/inbox-triage.git
+   cd inbox-triage
+   
+   # Install Python dependencies
+   pip3 install -r requirements_production.txt
+   ```
+
+2. **Run with Gunicorn**:
+   ```bash
+   gunicorn -c gunicorn.conf.py app_production:app
+   ```
+
+3. **Configure Nginx**:
+   ```bash
+   sudo cp nginx.conf /etc/nginx/sites-available/inbox-triage
+   sudo ln -s /etc/nginx/sites-available/inbox-triage /etc/nginx/sites-enabled/
+   sudo systemctl restart nginx
+   ```
+
+### Environment Variables
+
+Set these environment variables for production:
+
+```bash
+export SECRET_KEY="your-secret-key-here"
+export FLASK_ENV="production"
+export GOOGLE_CREDENTIALS_FILE="credentials.json"
+export DEBUG="False"
+```
+
+### Security Considerations
+
+- ✅ **HTTPS**: Always use HTTPS in production
+- ✅ **Rate Limiting**: Configured in production app
+- ✅ **Security Headers**: Implemented with Flask-Talisman
+- ✅ **Input Validation**: All inputs are validated
+- ✅ **Logging**: Comprehensive logging for monitoring
+- ✅ **Error Handling**: Graceful error handling
+
 ## 📁 Project Structure
 
 ```
