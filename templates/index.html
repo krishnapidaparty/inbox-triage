@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inbox Triage Assistant</title>
+</head>
+<body>
+    <h1>Inbox Triage Assistant</h1>
+    {% for cluster_id, emails in clusters.items() %}
+        <h2>Cluster {{ cluster_id + 1 }}</h2>
+        <a href="{{ url_for('archive_cluster', cluster_id=cluster_id) }}">Archive this cluster</a>
+        <ul>
+            {% for email in emails %}
+                <li>{{ email.subject }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</body>
+</html>
