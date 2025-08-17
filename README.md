@@ -53,6 +53,8 @@ An intelligent email management system that uses machine learning to cluster and
 
 ## 🚀 Usage
 
+### Local Deployment
+
 1. **Start the application**
    ```bash
    python app.py
@@ -67,6 +69,21 @@ An intelligent email management system that uses machine learning to cluster and
    - View your emails clustered by similarity
    - Click "Archive this cluster" to archive entire groups
    - Refresh to get the latest emails
+
+### Replit Deployment
+
+1. **Fork this repository** to your GitHub account
+2. **Import to Replit**:
+   - Go to [replit.com](https://replit.com)
+   - Click "Create Repl"
+   - Choose "Import from GitHub"
+   - Select your forked repository
+3. **Run the application**:
+   - Replit will automatically install dependencies
+   - Click "Run" to start the application
+   - Access your app at the provided Replit URL
+
+**Note**: The Replit version runs in demo mode with sample data. For full Gmail integration, deploy locally with your Google API credentials.
 
 ## 📁 Project Structure
 
